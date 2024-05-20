@@ -1,9 +1,9 @@
-const Form = ({ title, instruction }) => {
+const Form = () => {
 	return (
 		<>
 			<div className='heading'>
-				<h1 className='title'>{title}</h1>
-				<p className='instruction'>{instruction}</p>
+				<h1 className='title'>Personal info</h1>
+				<p className='instruction'>Please provide your name, email address, and phone number.</p>
 			</div>
 			<div className='input-heading'>
 				<label htmlFor='name'>Name</label>
@@ -20,7 +20,7 @@ const Form = ({ title, instruction }) => {
 				{false && <span>This field is requied</span>}
 			</div>
 			<input
-				type='text'
+				type='email'
 				id='email'
 				placeholder='e.g. stephancurrey@nba.com'
 				className='input-personal-info'

@@ -82,6 +82,7 @@ li {
 
 .button-flex {
 	display: flex;
+	flex-direction: row-reverse;
 	justify-content: space-between;
 }
 
@@ -316,24 +317,22 @@ input[type='checkbox'] {
 	margin: 2rem 0 1rem 0;
 }
 
-.added{
-    margin-bottom: 1rem;
+.added {
+	margin-bottom: 1rem;
 }
 
-.total{
-    padding: 1rem;
+.total {
+	padding: 1rem;
 }
 
-.bold-price{
-    font-weight: 600;
+.bold-price {
+	font-weight: 600;
 }
 
-.total-price{
-    color: #0022ee;
-    font-size: 20px;
+.total-price {
+	color: #0022ee;
+	font-size: 20px;
 }
-
-
 
 /* Thanks Page */
 .thanks-container {
@@ -343,7 +342,7 @@ input[type='checkbox'] {
 	align-items: center;
 	justify-content: center;
 	text-align: center;
-	line-height: 1.65rem;
+	line-height: 1.55rem;
 	padding: 0 0.5rem 1rem 0.5rem;
 }
 

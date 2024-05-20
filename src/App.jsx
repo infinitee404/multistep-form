@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Sidebar from './components/Sidebar'
 import Form from './components/Form'
 import Plan from './components/Plan'
@@ -7,49 +7,79 @@ import Summary from './components/Summary'
 import Thanks from './components/Thanks'
 import './styles.css'
 
+export const isMonthlyContext = React.createContext()
+export const addOnsList = React.createContext([])
+
 const App = () => {
-	const flag = false
+	const [stepNum, setStepNum] = useState(1)
+	const [checkout, setCheckout] = useState(false)
+	const [isMonthly, setIsMonthly] = useState(true)
+	const [addOns, setAddOns] = useState([])
+
+	const gotoNextPage = () => {
+		if (stepNum <= 4) setStepNum((prevStep) => prevStep + 1)
+	}
+
+	const gotoPreviousPage = () => {
+		if (stepNum <= 4) setStepNum((prevStep) => prevStep - 1)
+	}
+
+	const toggleIsMonthly = () => {
+		setIsMonthly(!isMonthly)
+	}
+
+	const changeAddons = () => {
+		setAddOns((prevAddOns) => {
+			return [...prevAddOns]
+		})
+	}
 	return (
-		<>
-			<div className='app'>
-				<aside className='sidebar'>
-					<Sidebar />
-				</aside>
-				<main className='main'>
-					{/* <Form
-						title='Personal info'
-						instruction='Please provide your name, email address, and phone number.'
-					/> */}
-					{/* <Plan
-						title='Select your plan'
-						instruction='You have the option of monthly or yearly billing'
-					/> */}
-					{/* <AddOns 
-                        title='Pick add-ons'
-                        instruction='Add-ons help enhance your gaming experience.'
-                    /> */}
-					<Summary
-						title='Finishing up'
-						instruction='Double-check everything looks OK before confirming.'
-                        planType='Monthly'
-					/>
-					{/* <Thanks
-						title='Thank you!'
-						instruction='Thanks for conforming your subscription! We hope you have fun using our platform. If you ever need support, please feel free to email us at support@nbagaming.com.'
-					/> */}
-					<div className='button-container'>
-						<div className='button-flex'>
-							<button className='button-back'>Go Back</button>
-							{flag ? (
-								<button className='button button-next'>Next Step</button>
-							) : (
-								<button className='button button-confirm'>Confirm</button>
-							)}
-						</div>
-					</div>
-				</main>
-			</div>
-		</>
+		<isMonthlyContext.Provider value={{ isMonthly, toggleIsMonthly }}>
+			<addOnsList.Provider value={{ addOns, changeAddons }}>
+				<div className='app'>
+					<aside className='sidebar'>
+						<Sidebar stepCount={stepNum} />
+					</aside>
+					<main className='main'>
+						{stepNum == 1 && <Form />}
+						{stepNum == 2 && <Plan />}
+						{stepNum == 3 && <AddOns />}
+						{stepNum == 4 && !checkout && <Summary />}
+						{!checkout ? (
+							<div className='button-container'>
+								<div className='button-flex'>
+									{stepNum < 4 ? (
+										<button
+											className='button button-next'
+											onClick={gotoNextPage}
+										>
+											Next Step
+										</button>
+									) : (
+										<button
+											className='button button-confirm'
+											onClick={() => setCheckout(true)}
+										>
+											Confirm
+										</button>
+									)}
+									{stepNum != 1 && (
+										<button
+											className='button-back'
+											onClick={gotoPreviousPage}
+										>
+											Go Back
+										</button>
+									)}
+								</div>
+							</div>
+						) : (
+							<Thanks />
+						)}
+					</main>
+				</div>
+			</addOnsList.Provider>
+		</isMonthlyContext.Provider>
 	)
 }
 
