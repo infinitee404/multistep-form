@@ -1,12 +1,12 @@
 import { useContext } from 'react'
-import { addOnsList } from '../App'
+import { addOnsListContext } from '../App'
 import { isMonthlyContext } from '../App'
 
 const AddOnsOption = ({ addOnName, addOnFeature, addOnRate }) => {
-	const { addOns, changeAddons } = useContext(addOnsList)
+	const { addOns, changeAddons } = useContext(addOnsListContext)
 	const { isMonthly } = useContext(isMonthlyContext)
 	const unit = isMonthly ? 'mo' : 'yr'
-    const rate = isMonthly ? addOnRate : addOnRate*10
+	const rate = isMonthly ? addOnRate : addOnRate * 10
 
 	const selectedAddons = (event) => {
 		{
@@ -22,7 +22,7 @@ const AddOnsOption = ({ addOnName, addOnFeature, addOnRate }) => {
 					type='checkbox'
 					onChange={selectedAddons}
 					name={addOnName}
-					value={rate}
+					value={addOnRate}
 				/>
 				<div className='add-ons-description'>
 					<h3>{addOnName}</h3>

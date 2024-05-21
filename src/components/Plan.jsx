@@ -1,13 +1,16 @@
 import { useContext } from 'react'
-import { isMonthlyContext } from '../App'
+import { isMonthlyContext, selectedPlanContext } from '../App'
 
-const PlanOption = ({ planName, planCostMonthly, planCostYearly, freeMonths, isSelected }) => {
+const PlanOption = ({ planName, planCost, freeMonths }) => {
 	const { isMonthly } = useContext(isMonthlyContext)
-	const price = `${isMonthly ? `${planCostMonthly}/mo` : `${planCostYearly}/yr`}`
+	const { selectedPlan, toggleSelectedPlan } = useContext(selectedPlanContext)
+
+	const price = `${isMonthly ? `${planCost}/mo` : `${planCost * 10}/yr`}`
+
 	return (
 		<div
-			className={`plan-option ${isSelected ? 'plan-selected' : ''}`}
-			onClick={() => console.log('hello ', planName)}
+			className={`plan-option ${selectedPlan === planName ? 'plan-selected' : ''}`}
+			onClick={() => toggleSelectedPlan(planName)}
 		>
 			<img
 				src={`./src/assets/images/icon-${planName}.svg`}
@@ -28,20 +31,17 @@ const Plan = () => {
 	const planDetails = [
 		{
 			planName: 'Arcade',
-			planCostMonthly: 9,
-			planCostYearly: 90,
+			planCost: 9,
 			freeMonths: 2,
 		},
 		{
 			planName: 'Advanced',
-			planCostMonthly: 12,
-			planCostYearly: 120,
+			planCost: 12,
 			freeMonths: 2,
 		},
 		{
 			planName: 'Pro',
-			planCostMonthly: 15,
-			planCostYearly: 150,
+			planCost: 15,
 			freeMonths: 2,
 		},
 	]
@@ -64,7 +64,7 @@ const Plan = () => {
 					id='switch'
 				/>
 				<label
-					for='switch'
+					htmlFor='switch'
 					onClick={toggleIsMonthly}
 				/>
 				<span className={`toggle-options ${!isMonthly && 'toggle-selected'}`}>Yearly</span>

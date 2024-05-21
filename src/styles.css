@@ -188,6 +188,7 @@ li {
 .plan-option:hover {
 	border: 1px solid var(--button-next);
 }
+
 .plan-selected {
 	border: 1px solid var(--button-next);
 	background-color: var(--bg-color);
@@ -270,6 +271,11 @@ li {
 	border-radius: 0.5rem;
 	margin-bottom: 0.75rem;
 	padding: 1rem;
+}
+
+.add-ons-option:hover{
+    cursor: pointer;
+    border: 1px solid var(--button-next);
 }
 
 .add-ons-left {

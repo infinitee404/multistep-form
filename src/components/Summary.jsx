@@ -1,12 +1,19 @@
 import { useContext } from 'react'
-import { isMonthlyContext } from '../App'
-import { addOnsList } from '../App'
+import { isMonthlyContext, addOnsListContext, selectedPlanContext } from '../App'
 
 const Summary = () => {
 	const { isMonthly, toggleIsMonthly } = useContext(isMonthlyContext)
-	const { addOns } = useContext(addOnsList)
+	const { addOns } = useContext(addOnsListContext)
+	const { selectedPlan } = useContext(selectedPlanContext)
 	const unit = isMonthly ? 'mo' : 'yr'
-    let planCost = isMonthly ? 9 : 90
+	let planCost
+	if (selectedPlan === 'Arcade') {
+		planCost = isMonthly ? 9 : 90
+	} else if (selectedPlan === 'Advanced') {
+		planCost = isMonthly ? 12 : 120
+	} else if (selectedPlan === 'Pro') {
+		planCost = isMonthly ? 15 : 150
+	}
 	let totalCost = planCost
 	return (
 		<>
@@ -17,7 +24,9 @@ const Summary = () => {
 			<div className='summary'>
 				<div className='plan-summary'>
 					<div className='plan-summary-left'>
-						<h4>Arcade ({isMonthly ? 'monthly' : 'yearly'})</h4>
+						<h4>
+							{selectedPlan} ({isMonthly ? 'monthly' : 'yearly'})
+						</h4>
 						<button
 							className='button-back change-button'
 							onClick={toggleIsMonthly}
@@ -25,20 +34,27 @@ const Summary = () => {
 							Change
 						</button>
 					</div>
-					<span className='bold-price'>${planCost}/{unit}</span>
+					<span className='bold-price'>
+						${planCost}/{unit}
+					</span>
 				</div>
 				<div className='line' />
-				{addOns.map((index, count) => {
-                    totalCost += Number(addOns[count].value)
+				{addOns.map((addOn, count) => {
+					const value = unit === 'yr' ? addOn.value * 10 : addOn.value
+					totalCost += Number(value)
 					return (
-						<div className='added'>
-							<span className='instruction'>{addOns[count].name}</span>
+						<div
+							className='added'
+							key={count}
+						>
+							<span className='instruction'>{addOn.name}</span>
 							<span>
-								+${addOns[count].value}/{unit}
+								+${value}/{unit}
 							</span>
 						</div>
 					)
 				})}
+
 				<div className='total'>
 					<span className='instruction'>Total (per {isMonthly ? 'month' : 'year'})</span>
 					<span className='bold-price total-price'>
