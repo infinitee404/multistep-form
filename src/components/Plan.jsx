@@ -53,16 +53,9 @@ const Plan = () => {
 				<p className='instruction'>You have the option of monthly or yearly billing.</p>
 			</div>
 			<div className='plans'>
-				{planDetails.map((index) => {
-					return (
-						<PlanOption
-							planName={index.planName}
-							planCostMonthly={index.planCostMonthly}
-							planCostYearly={index.planCostYearly}
-							freeMonths={index.freeMonths}
-						/>
-					)
-				})}
+				{planDetails.map((index) => (
+					<PlanOption {...index} />
+				))}
 			</div>
 			<div className='bill-toggle'>
 				<span className={`toggle-options ${isMonthly && 'toggle-selected'}`}>Monthly</span>

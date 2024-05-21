@@ -1,10 +1,13 @@
 import { useContext } from 'react'
 import { isMonthlyContext } from '../App'
-// import { addOnsList } from '../App'
+import { addOnsList } from '../App'
 
 const Summary = () => {
 	const { isMonthly, toggleIsMonthly } = useContext(isMonthlyContext)
+	const { addOns } = useContext(addOnsList)
 	const unit = isMonthly ? 'mo' : 'yr'
+    let planCost = isMonthly ? 9 : 90
+	let totalCost = planCost
 	return (
 		<>
 			<div className='heading'>
@@ -22,25 +25,26 @@ const Summary = () => {
 							Change
 						</button>
 					</div>
-					<span className='bold-price'>$9/{unit}</span>
+					<span className='bold-price'>${planCost}/{unit}</span>
 				</div>
 				<div className='line' />
-				<div className='added'>
-					<span className='instruction'>Online Service</span>
-					<span>+$1/{unit}</span>
+				{addOns.map((index, count) => {
+                    totalCost += Number(addOns[count].value)
+					return (
+						<div className='added'>
+							<span className='instruction'>{addOns[count].name}</span>
+							<span>
+								+${addOns[count].value}/{unit}
+							</span>
+						</div>
+					)
+				})}
+				<div className='total'>
+					<span className='instruction'>Total (per {isMonthly ? 'month' : 'year'})</span>
+					<span className='bold-price total-price'>
+						${totalCost}/{unit}
+					</span>
 				</div>
-				<div className='added'>
-					<span className='instruction'>Larger Storage</span>
-					<span>+$2/{unit}</span>
-				</div>
-				<div className='added'>
-					<span className='instruction'>Larger Storage</span>
-					<span>+$2/{unit}</span>
-				</div>
-			</div>
-			<div className='total'>
-				<span className='instruction'>Total (per {isMonthly ? 'month' : 'year'})</span>
-				<span className='bold-price total-price'>$14/{unit}</span>
 			</div>
 		</>
 	)

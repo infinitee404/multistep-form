@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Sidebar from './components/Sidebar'
 import Form from './components/Form'
 import Plan from './components/Plan'
@@ -8,16 +8,24 @@ import Thanks from './components/Thanks'
 import './styles.css'
 
 export const isMonthlyContext = React.createContext()
-export const addOnsList = React.createContext([])
+export const addOnsList = React.createContext()
 
 const App = () => {
 	const [stepNum, setStepNum] = useState(1)
 	const [checkout, setCheckout] = useState(false)
 	const [isMonthly, setIsMonthly] = useState(true)
 	const [addOns, setAddOns] = useState([])
+	const [isValidated, setIsValidated] = useState({
+        validName: true,
+        validEmail: true,
+        validNumber: true,
+        validPlan: true
+    })
 
 	const gotoNextPage = () => {
-		if (stepNum <= 4) setStepNum((prevStep) => prevStep + 1)
+		if (isValidated.validName && isValidated.validEmail && isValidated.validNumber) {
+			if (stepNum <= 4) setStepNum((prevStep) => prevStep + 1)
+		} 
 	}
 
 	const gotoPreviousPage = () => {
@@ -28,11 +36,16 @@ const App = () => {
 		setIsMonthly(!isMonthly)
 	}
 
-	const changeAddons = () => {
+	const changeAddons = (newAddOnName, newAddOnValue, addToList) => {
 		setAddOns((prevAddOns) => {
-			return [...prevAddOns]
+			if (addToList) {
+				return [...prevAddOns, { name: newAddOnName, value: newAddOnValue }]
+			} else {
+				return prevAddOns.filter((addon) => addon.name !== newAddOnName)
+			}
 		})
 	}
+
 	return (
 		<isMonthlyContext.Provider value={{ isMonthly, toggleIsMonthly }}>
 			<addOnsList.Provider value={{ addOns, changeAddons }}>
@@ -41,7 +54,7 @@ const App = () => {
 						<Sidebar stepCount={stepNum} />
 					</aside>
 					<main className='main'>
-						{stepNum == 1 && <Form />}
+						{stepNum == 1 && <Form isValid={isValidated}/>}
 						{stepNum == 2 && <Plan />}
 						{stepNum == 3 && <AddOns />}
 						{stepNum == 4 && !checkout && <Summary />}

@@ -1,4 +1,4 @@
-const Form = () => {
+const Form = ({isValid}) => {
 	return (
 		<>
 			<div className='heading'>
@@ -7,7 +7,7 @@ const Form = () => {
 			</div>
 			<div className='input-heading'>
 				<label htmlFor='name'>Name</label>
-				{false && <span>This field is requied</span>}
+				{!isValid.validName && <span>This field is requied</span>}
 			</div>
 			<input
 				type='text'
@@ -17,7 +17,7 @@ const Form = () => {
 			/>
 			<div className='input-heading'>
 				<label htmlFor='email'>Email Address</label>
-				{false && <span>This field is requied</span>}
+				{!isValid.validEmail && <span>This field is requied</span>}
 			</div>
 			<input
 				type='email'
@@ -27,7 +27,7 @@ const Form = () => {
 			/>
 			<div className='input-heading'>
 				<label htmlFor='phone'>Phone Number</label>
-				{false && <span>This field is requied</span>}
+				{!isValid.validNumber && <span>This field is requied</span>}
 			</div>
 			<input
 				type='text'
