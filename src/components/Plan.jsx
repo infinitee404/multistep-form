@@ -27,6 +27,7 @@ const PlanOption = ({ planName, planCost, freeMonths }) => {
 
 const Plan = () => {
 	const { isMonthly, toggleIsMonthly } = useContext(isMonthlyContext)
+	const { selectedPlan } = useContext(selectedPlanContext)
 
 	const planDetails = [
 		{
@@ -62,7 +63,7 @@ const Plan = () => {
 				<input
 					type='checkbox'
 					id='switch'
-                    checked={!isMonthly}
+					checked={!isMonthly}
 				/>
 				<label
 					htmlFor='switch'
@@ -70,6 +71,7 @@ const Plan = () => {
 				/>
 				<span className={`toggle-options ${!isMonthly && 'toggle-selected'}`}>Yearly</span>
 			</div>
+			{selectedPlan == 'error' && <div className='error-field'>Please select a plan.</div>}
 		</>
 	)
 }

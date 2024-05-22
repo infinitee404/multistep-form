@@ -1,40 +1,47 @@
 import { useContext } from 'react'
-import { addOnsListContext } from '../App'
+import { addOnsContext } from '../App'
 import { isMonthlyContext } from '../App'
 
 const AddOnsOption = ({ addOnName, addOnFeature, addOnRate }) => {
-	const { addOns, changeAddons } = useContext(addOnsListContext)
+	const { addOns, changeAddons } = useContext(addOnsContext)
 	const { isMonthly } = useContext(isMonthlyContext)
 	const unit = isMonthly ? 'mo' : 'yr'
 	const rate = isMonthly ? addOnRate : addOnRate * 10
 
+	// Check if the addon is selected
+	const isSelected = addOns.some((addOn) => addOn.name === addOnName)
+
 	const selectedAddons = (event) => {
-		{
-			event.target.checked ? changeAddons(event.target.name, event.target.value, 1) : changeAddons(event.target.name, event.target.value, 0)
+		if (event.target.checked) {
+			changeAddons(event.target.id, event.target.value, 1)
+		} else {
+			changeAddons(event.target.id, event.target.value, 0)
 		}
 	}
 
 	return (
-		<div className='add-ons-option'>
-			{/* add-ons-selected = classname for selected */}
-			<div className='add-ons-left'>
-				<input
-					type='checkbox'
-					onChange={selectedAddons}
-					name={addOnName}
-					value={addOnRate}
-				/>
-				<div className='add-ons-description'>
-					<h3>{addOnName}</h3>
-					<p className='instruction'>{addOnFeature}</p>
+		<label htmlFor={addOnName}>
+			<div className={`add-ons-option ${isSelected && 'add-ons-selected'}`}>
+				<div className='add-ons-left'>
+					<input
+						type='checkbox'
+						onChange={selectedAddons}
+						id={addOnName}
+						value={addOnRate}
+						checked={isSelected}
+					/>
+					<div className='add-ons-description'>
+						<h3>{addOnName}</h3>
+						<p className='instruction'>{addOnFeature}</p>
+					</div>
+				</div>
+				<div className='add-ons-right'>
+					<p>
+						+${rate}/{unit}
+					</p>
 				</div>
 			</div>
-			<div className='add-ons-right'>
-				<p>
-					+${rate}/{unit}
-				</p>
-			</div>
-		</div>
+		</label>
 	)
 }
 

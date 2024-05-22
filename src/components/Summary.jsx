@@ -1,9 +1,9 @@
 import { useContext } from 'react'
-import { isMonthlyContext, addOnsListContext, selectedPlanContext } from '../App'
+import { isMonthlyContext, addOnsContext, selectedPlanContext } from '../App'
 
 const Summary = () => {
 	const { isMonthly, toggleIsMonthly } = useContext(isMonthlyContext)
-	const { addOns } = useContext(addOnsListContext)
+	const { addOns } = useContext(addOnsContext)
 	const { selectedPlan } = useContext(selectedPlanContext)
 	const unit = isMonthly ? 'mo' : 'yr'
 	let planCost

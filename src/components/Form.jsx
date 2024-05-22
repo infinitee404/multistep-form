@@ -4,10 +4,12 @@ import { formInfoContext } from '../App'
 const Form = ({ gotoNextPage }) => {
 	const { formInfo, handleFormInfo } = useContext(formInfoContext)
 	const { prevName, prevEmail, prevNumber } = formInfo
+
 	const [name, setName] = useState(prevName || '')
 	const [email, setEmail] = useState(prevEmail || '')
 	const [number, setNumber] = useState(prevNumber || '')
 	const [isValid, setIsValid] = useState(true)
+	const [emailError, setEmailError] = useState('')
 
 	const handleNameChange = (event) => {
 		setName(event.target.value)
@@ -26,13 +28,26 @@ const Form = ({ gotoNextPage }) => {
 		}
 	}
 
+	const validateEmail = (email) => {
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+		return emailRegex.test(email)
+	}
+
 	const checkFormValidation = () => {
-		if (name.length > 0 && email.length > 0 && number.length > 0) {
-			setIsValid(true)
-			return true
+		if (name.length === 0 || email.length === 0 || number.length === 0) {
+			setIsValid(false)
+			return false
 		}
-		setIsValid(false)
-		return false
+
+		if (!validateEmail(email)) {
+			setEmailError('Invalid email address')
+			setIsValid(false)
+			return false
+		}
+
+		setEmailError('')
+		setIsValid(true)
+		return true
 	}
 
 	const handleGotoNextPage = (event) => {
@@ -47,7 +62,7 @@ const Form = ({ gotoNextPage }) => {
 		}
 	}
 
-    // Set values of previous input if returned back
+	// Set values of previous input if returned back
 	useEffect(() => {
 		formInfo.name && setName(formInfo.name)
 		formInfo.email && setEmail(formInfo.email)
@@ -77,11 +92,12 @@ const Form = ({ gotoNextPage }) => {
 				<div className='input-heading'>
 					<label htmlFor='email'>Email Address</label>
 					{!isValid && email.length === 0 && <span>This field is required</span>}
+					{emailError && <span>{emailError}</span>}
 				</div>
 				<input
 					type='email'
 					id='email'
-					placeholder='e.g. stephancurrey@nba.com'
+					placeholder='e.g. stephencurry@nba.com'
 					className='input-personal-info'
 					autoComplete='off'
 					value={email}

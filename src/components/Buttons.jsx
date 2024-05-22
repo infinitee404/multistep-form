@@ -2,11 +2,13 @@ import { useContext } from 'react'
 import { selectedPlanContext } from '../App'
 
 const Buttons = ({ stepNum, gotoNextPage, gotoPreviousPage, setCheckout }) => {
-	const { selectedPlan } = useContext(selectedPlanContext)
+	const { selectedPlan, toggleSelectedPlan } = useContext(selectedPlanContext)
 	const handleGotoNextPage = () => {
         console.log('next page')
 		if (stepNum == 2) {
-			if (selectedPlan != null) {
+            if (selectedPlan == null || selectedPlan == 'error'){
+                toggleSelectedPlan('error')
+            }else if (selectedPlan != null) {
 				gotoNextPage()
 				return
 			}

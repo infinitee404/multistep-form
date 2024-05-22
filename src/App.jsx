@@ -11,15 +11,14 @@ import './styles.css'
 export const formInfoContext = React.createContext()
 export const selectedPlanContext = React.createContext()
 export const isMonthlyContext = React.createContext()
-export const addOnsListContext = React.createContext()
+export const addOnsContext = React.createContext()
 
 const App = () => {
-
-    // Step-count states
+	// Step-count states
 	const [stepNum, setStepNum] = useState(1)
 	const [checkout, setCheckout] = useState(false)
 
-    // Context States
+	// Context States
 	const [formInfo, setFormInfo] = useState({
 		name: '',
 		email: '',
@@ -42,7 +41,12 @@ const App = () => {
 	}
 
 	const toggleSelectedPlan = (newPlan) => {
-		setSelectedPlan(newPlan)
+		// console.log(selectedPlan)
+		if (newPlan == 'error') {
+			setSelectedPlan('error')
+			return
+		}
+		setSelectedPlan((prevPlan) => (prevPlan === newPlan ? null : newPlan))
 	}
 
 	const toggleIsMonthly = () => {
@@ -64,7 +68,7 @@ const App = () => {
 			<formInfoContext.Provider value={{ formInfo, handleFormInfo }}>
 				<selectedPlanContext.Provider value={{ selectedPlan, toggleSelectedPlan }}>
 					<isMonthlyContext.Provider value={{ isMonthly, toggleIsMonthly }}>
-						<addOnsListContext.Provider value={{ addOns, changeAddons }}>
+						<addOnsContext.Provider value={{ addOns, changeAddons }}>
 							<div className='app'>
 								<aside className='sidebar'>
 									<Sidebar stepCount={stepNum} />
@@ -86,7 +90,7 @@ const App = () => {
 									)}
 								</main>
 							</div>
-						</addOnsListContext.Provider>
+						</addOnsContext.Provider>
 					</isMonthlyContext.Provider>
 				</selectedPlanContext.Provider>
 			</formInfoContext.Provider>
