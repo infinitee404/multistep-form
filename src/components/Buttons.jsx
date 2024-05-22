@@ -4,6 +4,7 @@ import { selectedPlanContext } from '../App'
 const Buttons = ({ stepNum, gotoNextPage, gotoPreviousPage, setCheckout }) => {
 	const { selectedPlan } = useContext(selectedPlanContext)
 	const handleGotoNextPage = () => {
+        console.log('next page')
 		if (stepNum == 2) {
 			if (selectedPlan != null) {
 				gotoNextPage()

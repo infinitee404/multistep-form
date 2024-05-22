@@ -80,6 +80,13 @@ li {
 	bottom: 3rem;
 }
 
+.button-form-container {
+	position: absolute;
+	width: calc(100% - 10rem);
+	bottom: 3rem;
+    z-index: 10;
+}
+
 .button-flex {
 	display: flex;
 	flex-direction: row-reverse;

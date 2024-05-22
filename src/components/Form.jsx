@@ -1,4 +1,59 @@
-const Form = ({isValid}) => {
+import { useContext, useState, useEffect } from 'react'
+import { formInfoContext } from '../App'
+
+const Form = ({ gotoNextPage }) => {
+	const { formInfo, handleFormInfo } = useContext(formInfoContext)
+	const { prevName, prevEmail, prevNumber } = formInfo
+	const [name, setName] = useState(prevName || '')
+	const [email, setEmail] = useState(prevEmail || '')
+	const [number, setNumber] = useState(prevNumber || '')
+	const [isValid, setIsValid] = useState(true)
+
+	const handleNameChange = (event) => {
+		setName(event.target.value)
+	}
+
+	const handleEmailChange = (event) => {
+		setEmail(event.target.value)
+	}
+
+	const handleNumberChange = (event) => {
+		const inputValue = event.target.value
+		const numberRegex = /^\+?\d*$/ // Regex to match only numbers
+
+		if (numberRegex.test(inputValue)) {
+			setNumber(inputValue)
+		}
+	}
+
+	const checkFormValidation = () => {
+		if (name.length > 0 && email.length > 0 && number.length > 0) {
+			setIsValid(true)
+			return true
+		}
+		setIsValid(false)
+		return false
+	}
+
+	const handleGotoNextPage = (event) => {
+		event.preventDefault()
+		if (checkFormValidation()) {
+			handleFormInfo({
+				name: name,
+				email: email,
+				number: number,
+			})
+			gotoNextPage()
+		}
+	}
+
+    // Set values of previous input if returned back
+	useEffect(() => {
+		formInfo.name && setName(formInfo.name)
+		formInfo.email && setEmail(formInfo.email)
+		formInfo.number && setNumber(formInfo.number)
+	}, [])
+
 	return (
 		<>
 			<div className='heading'>
@@ -7,34 +62,55 @@ const Form = ({isValid}) => {
 			</div>
 			<div className='input-heading'>
 				<label htmlFor='name'>Name</label>
-				{!isValid.validName && <span>This field is requied</span>}
+				{!isValid && name.length === 0 && <span>This field is required</span>}
 			</div>
 			<input
 				type='text'
 				id='name'
 				placeholder='e.g. Stephen Curry'
 				className='input-personal-info'
+				autoComplete='off'
+				value={name}
+				onChange={handleNameChange}
 			/>
-			<div className='input-heading'>
-				<label htmlFor='email'>Email Address</label>
-				{!isValid.validEmail && <span>This field is requied</span>}
-			</div>
-			<input
-				type='email'
-				id='email'
-				placeholder='e.g. stephancurrey@nba.com'
-				className='input-personal-info'
-			/>
-			<div className='input-heading'>
-				<label htmlFor='phone'>Phone Number</label>
-				{!isValid.validNumber && <span>This field is requied</span>}
-			</div>
-			<input
-				type='text'
-				id='phone'
-				placeholder='e.g. +01 23 456 7890'
-				className='input-personal-info input-error'
-			/>
+			<form>
+				<div className='input-heading'>
+					<label htmlFor='email'>Email Address</label>
+					{!isValid && email.length === 0 && <span>This field is required</span>}
+				</div>
+				<input
+					type='email'
+					id='email'
+					placeholder='e.g. stephancurrey@nba.com'
+					className='input-personal-info'
+					autoComplete='off'
+					value={email}
+					onChange={handleEmailChange}
+				/>
+				<div className='input-heading'>
+					<label htmlFor='phone'>Phone Number</label>
+					{!isValid && number.length === 0 && <span>This field is required</span>}
+				</div>
+				<input
+					type='text'
+					id='phone'
+					placeholder='e.g. +01 23 456 7890'
+					className='input-personal-info'
+					autoComplete='off'
+					value={number}
+					onChange={handleNumberChange}
+				/>
+				<div className='button-form-container'>
+					<div className='button-flex'>
+						<button
+							className='button button-next'
+							onClick={handleGotoNextPage}
+						>
+							Next Step
+						</button>
+					</div>
+				</div>
+			</form>
 		</>
 	)
 }
