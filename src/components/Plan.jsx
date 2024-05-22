@@ -62,6 +62,7 @@ const Plan = () => {
 				<input
 					type='checkbox'
 					id='switch'
+                    checked={!isMonthly}
 				/>
 				<label
 					htmlFor='switch'
