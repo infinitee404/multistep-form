@@ -7,13 +7,15 @@ const PlanOption = ({ planName, planCost, freeMonths }) => {
 
 	const price = `${isMonthly ? `${planCost}/mo` : `${planCost * 10}/yr`}`
 
+	const imageName = planName.toLowerCase()
+
 	return (
 		<div
 			className={`plan-option ${selectedPlan === planName ? 'plan-selected' : ''}`}
 			onClick={() => toggleSelectedPlan(planName)}
 		>
 			<img
-				src={`./src/assets/images/icon-${planName}.svg`}
+				src={`./src/assets/images/icon-${imageName}.svg`}
 				alt='plan-logo'
 			/>
 			<div className='plan-description'>

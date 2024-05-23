@@ -297,7 +297,7 @@ li {
 }
 
 .add-ons-left {
-    position: relative;
+	position: relative;
 	display: flex;
 	gap: 1.5rem;
 	align-items: center;
@@ -309,7 +309,7 @@ li {
 
 /* .add-ons-left > */
 input[type='checkbox'] {
-    visibility: hidden;
+	visibility: hidden;
 	height: 1.25rem;
 	width: 1.5rem;
 }
