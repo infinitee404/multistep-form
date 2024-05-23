@@ -6,6 +6,7 @@ const PlanOption = ({ planName, planCost, freeMonths }) => {
 	const { selectedPlan, toggleSelectedPlan } = useContext(selectedPlanContext)
 
 	const price = `${isMonthly ? `${planCost}/mo` : `${planCost * 10}/yr`}`
+	const imageName = planName.toLowerCase()
 
 	return (
 		<div
@@ -13,7 +14,7 @@ const PlanOption = ({ planName, planCost, freeMonths }) => {
 			onClick={() => toggleSelectedPlan(planName)}
 		>
 			<img
-				src={`./src/assets/images/icon-${planName}.svg`}
+				src={`./src/assets/images/icon-${imageName}.svg`}
 				alt='plan-logo'
 			/>
 			<div className='plan-description'>
