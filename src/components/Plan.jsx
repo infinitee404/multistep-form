@@ -1,5 +1,14 @@
 import { useContext } from 'react'
 import { isMonthlyContext, selectedPlanContext } from '../App'
+import arcade from '../assets/images/icon-arcade.svg'
+import advanced from '../assets/images/icon-advanced.svg'
+import pro from '../assets/images/icon-pro.svg'
+
+const planImages = {
+	arcade,
+	advanced,
+	pro,
+}
 
 const PlanOption = ({ planName, planCost, freeMonths }) => {
 	const { isMonthly } = useContext(isMonthlyContext)
@@ -15,9 +24,10 @@ const PlanOption = ({ planName, planCost, freeMonths }) => {
 			onClick={() => toggleSelectedPlan(planName)}
 		>
 			<img
-				src={`./src/assets/images/icon-${imageName}.svg`}
-				alt='plan-logo'
+				src={planImages[imageName]}
+				alt={`${planName}-logo`}
 			/>
+
 			<div className='plan-description'>
 				<h3>{planName}</h3>
 				<p className='instruction'>${price}</p>
