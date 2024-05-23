@@ -1,16 +1,19 @@
 .app {
 	display: flex;
 	padding: 1rem;
+	align-self: center;
+	justify-content: center;
 	border-radius: 20px;
 	background-color: var(--white);
 	box-shadow: 0 1px 3px #23232323;
+	/* width: 100%; */
+	max-width: 926px;
 }
 
 /* Sidebar */
 
 .sidebar {
 	background: url(assets/images/bg-sidebar-desktop.svg);
-	object-fit: cover;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
@@ -23,8 +26,8 @@
 
 li {
 	display: flex;
-	gap: 1rem;
-	margin-bottom: 2rem;
+	gap: 1vw;
+	margin-bottom: 3.5vh;
 	text-transform: uppercase;
 	font-weight: 500;
 }
@@ -60,7 +63,7 @@ li {
 /* Main page, applicable for all components */
 
 .main {
-	padding: 3rem 5rem;
+	padding: 5vh 4.5vw;
 	color: var(--text-primary);
 	width: 38.75rem;
 	position: relative;
@@ -76,15 +79,17 @@ li {
 
 .button-container {
 	position: absolute;
-	width: calc(100% - 10rem);
+	width: calc(100% - 9vw);
+	min-width: 180px;
 	bottom: 3rem;
 }
 
 .button-form-container {
 	position: absolute;
-	width: calc(100% - 10rem);
+	width: calc(100% - 9vw);
 	bottom: 3rem;
-    z-index: 10;
+	min-width: 180px;
+	z-index: 10;
 }
 
 .button-flex {
@@ -243,7 +248,7 @@ li {
 	cursor: pointer;
 	text-indent: -9999px;
 	width: 1.75rem;
-	height: 1rem;
+	height: 14px;
 	background: var(--button-next);
 	display: block;
 	border-radius: 1rem;
@@ -254,8 +259,8 @@ li {
 .bill-toggle > label:after {
 	content: '';
 	position: absolute;
-	top: 3px;
-	left: 3px;
+	top: 2px;
+	left: 2px;
 	width: 10px;
 	height: 10px;
 	background: var(--white);
@@ -264,14 +269,14 @@ li {
 }
 
 .bill-toggle > input:checked + label:after {
-	left: calc(100% - 3px);
+	left: calc(100% - 2px);
 	transform: translateX(-100%);
 }
 
-.error-field{
-    width: 100%;
-    color: var(--error);
-    text-align: center;
+.error-field {
+	width: 100%;
+	color: var(--error);
+	text-align: center;
 }
 
 /* Add-ons */
@@ -286,12 +291,13 @@ li {
 	padding: 1rem;
 }
 
-.add-ons-option:hover{
-    cursor: pointer;
-    border: 1px solid var(--button-next);
+.add-ons-option:hover {
+	cursor: pointer;
+	border: 1px solid var(--button-next);
 }
 
 .add-ons-left {
+    position: relative;
 	display: flex;
 	gap: 1.5rem;
 	align-items: center;
@@ -303,10 +309,54 @@ li {
 
 /* .add-ons-left > */
 input[type='checkbox'] {
-	cursor: pointer;
+    visibility: hidden;
 	height: 1.25rem;
-	width: 1.25rem;
+	width: 1.5rem;
 }
+
+/* checkbox */
+.checkbox-wrapper {
+	position: relative;
+	margin-left: 2rem;
+	cursor: pointer;
+	margin-bottom: 0px;
+}
+
+.checkbox-wrapper input[type='checkbox'] ~ .checkbox-input {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	height: 20px;
+	width: 20px;
+	background: #ffffff;
+	transition: background 0.3s, border-color 0.3s;
+	border: 1px solid #aaa;
+	border-radius: 4px;
+	transform: translate(0, -50%);
+}
+
+.checkbox-wrapper input[type='checkbox'] ~ .checkbox-input::after {
+	content: '';
+	position: absolute;
+	display: none;
+	left: 4px;
+	top: 4px;
+	width: 12px;
+	height: 12px;
+	transition: background 0.3s, border-color 0.3s;
+	background-color: #ffffff;
+	clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.checkbox-wrapper input:checked ~ .checkbox-input::after {
+	display: block;
+}
+
+.checkbox-wrapper input[type='checkbox']:checked ~ .checkbox-input {
+	background: #463dfa;
+	border-color: #463dfa;
+}
+/* checkbox-end */
 
 /* Summary Page */
 .summary {
@@ -370,4 +420,93 @@ input[type='checkbox'] {
 }
 .thanks-container img {
 	margin-bottom: 3rem;
+}
+
+@media screen and (max-width: 1024px) {
+	.app {
+		width: auto;
+	}
+	.sidebar {
+		width: clamp(auto, 15vw, 276px);
+	}
+	.main {
+		width: auto;
+	}
+}
+
+@media screen and (max-width: 660px) {
+	html {
+		font-size: 12px;
+	}
+	.app {
+		display: flex;
+		padding: 0;
+		flex-direction: column;
+		min-height: 100vh;
+		justify-content: flex-start;
+		align-items: center;
+		background-color: var(--bg-color);
+		border: none;
+		border-radius: 0;
+		box-shadow: none;
+	}
+
+	.sidebar {
+		background: url(assets/images/bg-sidebar-mobile.svg);
+		background-size: cover;
+		width: 100vw;
+		padding: 0;
+		margin: 0;
+		max-height: 20vh;
+		border-radius: 0;
+		z-index: 1;
+	}
+	ul {
+		display: flex;
+		width: 100%;
+		justify-content: center;
+		gap: 10px;
+		margin-top: 2rem;
+	}
+	.step-right {
+		display: none;
+	}
+	.step-count {
+		height: 3rem;
+		width: 3rem;
+		line-height: 2.75rem;
+		font-size: 1.25rem;
+	}
+	.main {
+		max-width: 90vw;
+		/* height: 70vh; */
+		background-color: var(--white);
+		border-radius: 10px;
+		z-index: 2;
+		margin: -2.5rem 0;
+		box-shadow: 0 20px 15px 0px #23232309;
+	}
+
+	.plans {
+		grid-template-columns: auto;
+	}
+	.plan-option {
+		flex-direction: row;
+		justify-content: flex-start;
+	}
+
+	.thanks-container {
+		padding: 3rem 2.25rem;
+	}
+
+	.button-container,
+	.button-form-container {
+		position: fixed;
+		width: calc(100% - 2rem);
+		bottom: 1rem;
+		left: 1rem;
+	}
+	.button {
+		border-radius: 5px;
+	}
 }

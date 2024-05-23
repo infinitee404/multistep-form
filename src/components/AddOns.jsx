@@ -20,7 +20,7 @@ const AddOnsOption = ({ addOnName, addOnFeature, addOnRate }) => {
 	}
 
 	return (
-		<label htmlFor={addOnName}>
+		<label className='checkbox-wrapper' htmlFor={addOnName}>
 			<div className={`add-ons-option ${isSelected && 'add-ons-selected'}`}>
 				<div className='add-ons-left'>
 					<input
@@ -30,6 +30,7 @@ const AddOnsOption = ({ addOnName, addOnFeature, addOnRate }) => {
 						value={addOnRate}
 						checked={isSelected}
 					/>
+                    <div className='checkbox-input' />
 					<div className='add-ons-description'>
 						<h3>{addOnName}</h3>
 						<p className='instruction'>{addOnFeature}</p>
