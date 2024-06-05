@@ -122,10 +122,6 @@ li {
 	transition: filter 0.3s ease;
 }
 
-.button:hover::before {
-	filter: brightness(2); /* Apply the brightness filter */
-}
-
 .button-next {
 	background-color: var(--button-next);
 }
@@ -138,10 +134,6 @@ li {
 	color: var(--text-secondary);
 	background-color: transparent;
 	border: none;
-}
-
-.button-back:hover {
-	color: var(--text-primary);
 }
 
 /* Form Page */
@@ -169,7 +161,6 @@ li {
 	cursor: pointer;
 }
 
-.input-personal-info:hover,
 .input-personal-info:focus {
 	outline: none;
 	border: 1px solid var(--button-next);
@@ -195,10 +186,6 @@ li {
 	justify-content: space-between;
 	border: 1px solid var(--highlight);
 	border-radius: 10px;
-}
-
-.plan-option:hover {
-	border: 1px solid var(--button-next);
 }
 
 .plan-selected {
@@ -281,8 +268,8 @@ li {
 
 /* Add-ons */
 
-.add-ons{
-    margin-top: -1rem;
+.add-ons {
+	margin-top: -1rem;
 }
 .add-ons-option {
 	display: flex;
@@ -291,11 +278,6 @@ li {
 	border: 1px solid var(--text-secondary);
 	border-radius: 0.5rem;
 	padding: 0.75rem;
-}
-
-.add-ons-option:hover {
-	cursor: pointer;
-	border: 1px solid var(--button-next);
 }
 
 .add-ons-left {
@@ -377,10 +359,6 @@ input[type='checkbox'] {
 	text-decoration: underline;
 }
 
-.change-button:hover {
-	color: #0022ee;
-}
-
 .line {
 	height: 1px;
 	width: 100%;
@@ -436,9 +414,9 @@ input[type='checkbox'] {
 	}
 }
 
-@media screen and (max-width: 660px) {
+@media screen and (max-width: 768px) {
 	html {
-		font-size: 12px;
+		font-size: 14px;
 	}
 	.app {
 		display: flex;
@@ -480,7 +458,7 @@ input[type='checkbox'] {
 		font-size: 1.25rem;
 	}
 	.main {
-		max-width: 90vw;
+		width: min(90vw, 475px);
 		/* height: 70vh; */
 		background-color: var(--white);
 		border-radius: 10px;
@@ -510,5 +488,28 @@ input[type='checkbox'] {
 	}
 	.button {
 		border-radius: 5px;
+	}
+}
+
+@media (hover: hover) {
+	.button:hover::before {
+		filter: brightness(2);
+	}
+	.button-back:hover {
+		color: var(--text-primary);
+	}
+	.input-personal-info:hover {
+		outline: none;
+		border: 1px solid var(--button-next);
+	}
+	.plan-option:hover {
+		border: 1px solid var(--button-next);
+	}
+	.add-ons-option:hover {
+		cursor: pointer;
+		border: 1px solid var(--button-next);
+	}
+	.change-button:hover {
+		color: #0022ee;
 	}
 }
