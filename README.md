@@ -21,7 +21,7 @@ To run the project locally, follow these steps:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/yourusername/multi-step-form.git
+    git clone https://github.com/infinitee404/multi-step-form.git
     cd multi-step-form
     ```
 
